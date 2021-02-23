@@ -1,0 +1,16 @@
+.Chat {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  height: 90%;
+  background-color: whitesmoke;
+}
+
+.Chat-text {
+  width: 100%;
+  height: 90%;
+}
+
+.Chat-input {
+  width: 100%;
+}
