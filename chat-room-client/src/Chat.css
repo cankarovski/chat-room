@@ -1,10 +1,10 @@
-.Chat {
+/* .Chat {
   display: flex;
   flex-direction: column;
   width: 70%;
   height: 90%;
   background-color: whitesmoke;
-}
+} */
 
 .Chat-text {
   width: 100%;

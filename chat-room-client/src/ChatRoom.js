@@ -30,7 +30,6 @@ export default class ChatRoom extends Component {
 
     await this.socket.on("message", (data) => {
       if (data.room === this.props.roomName) {
-        /* console.log(`${data.room}: ${data.username}: ${data.message}`); */
         console.log(data);
         this.setState((prevState) => ({
           messages: [...prevState.messages, data],
@@ -41,11 +40,17 @@ export default class ChatRoom extends Component {
 
   sendMessage(message) {
     console.log("sending message:", message);
-    this.socket.emit("message", {
-      username: this.props.userName,
-      room: this.props.roomName,
-      message: message,
-    });
+    this.socket.emit(
+      "message",
+      {
+        username: this.props.userName,
+        room: this.props.roomName,
+        message: message,
+      },
+      (response) => {
+        console.log(response.status);
+      }
+    );
   }
 
   render() {

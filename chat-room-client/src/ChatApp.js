@@ -68,7 +68,7 @@ export default class ChatApp extends Component {
     return (
       <div className="ChatApp">
         <h1 className="ChatApp-heading">CHAT-ROOM</h1>
-        <RoomContainer></RoomContainer>
+        {/* <RoomContainer></RoomContainer> */}
         {!this.state.loaded && <CreateUser onCreate={this.createUser} />}
         {this.state.loaded && chats}
       </div>
