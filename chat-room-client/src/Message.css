@@ -1,0 +1,29 @@
+.Message {
+  border-radius: 20px;
+  margin: 1rem;
+  padding: 1rem;
+  width: fit-content;
+  min-width: 80px;
+}
+
+.Message-self {
+  background-color: dodgerblue;
+  color: white;
+  align-self: flex-end;
+}
+
+.Message-notification {
+  background-color: darksalmon;
+  color: black;
+  align-self: flex-start;
+}
+
+.Message-friend {
+  background-color: whitesmoke;
+  color: black;
+  align-self: flex-start;
+}
+
+.Message h4 {
+  margin: 0;
+}

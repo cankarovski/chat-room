@@ -41,8 +41,9 @@ io.on("connection", function (socket) {
     socket.join(data.room);
 
     socket.to(data.room).emit("message", {
-      ...data,
-      message: `user ${data.username} joined room ${data.room}`,
+      room: data.room,
+      username: "Notification",
+      message: `User ${data.username} joined room ${data.room}`,
     });
   });
 

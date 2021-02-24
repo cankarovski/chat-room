@@ -26,19 +26,16 @@ export default class Chat extends Component {
   render() {
     return (
       <div className="Chat">
-        <div className="Chat-text"></div>
-        <div className="Chat-input">
-          <form onSubmit={this.handleSubmit}>
-            <label htmlFor="message"></label>
-            <input
-              id="message"
-              name="message"
-              value={this.state.message}
-              onChange={this.handleChange}
-            ></input>
-            <button>Send</button>
-          </form>
-        </div>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="message"></label>
+          <input
+            id="message"
+            name="message"
+            value={this.state.message}
+            onChange={this.handleChange}
+          ></input>
+          <button>Send</button>
+        </form>
       </div>
     );
   }

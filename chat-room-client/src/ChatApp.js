@@ -50,24 +50,19 @@ export default class ChatApp extends Component {
 
   render() {
     let chats = (
-      <div>
-        <ChatRoom
-          className="ChatApp-room"
-          socket={this.state.socket}
-          roomName="main"
-          userName={this.state.username}
-        />
-        <ChatRoom
-          className="ChatApp-room"
-          socket={this.state.socket}
-          roomName="general"
-          userName={this.state.username}
-        />
-      </div>
+      <ChatRoom
+        className="ChatApp-room"
+        socket={this.state.socket}
+        roomName="main"
+        userName={this.state.username}
+      />
     );
     return (
       <div className="ChatApp">
-        <h1 className="ChatApp-heading">CHAT-ROOM</h1>
+        <div className="ChatApp-sidebar">
+          <h1 className="ChatApp-heading">CHAT-ROOM</h1>
+        </div>
+
         {/* <RoomContainer></RoomContainer> */}
         {!this.state.loaded && <CreateUser onCreate={this.createUser} />}
         {this.state.loaded && chats}

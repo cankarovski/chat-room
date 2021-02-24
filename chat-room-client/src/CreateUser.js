@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./CreateUser.css";
 
 export default class CreateUser extends Component {
   constructor(props) {
@@ -22,9 +23,9 @@ export default class CreateUser extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="CreateUser">
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="user"></label>
+          <label htmlFor="user">Create User_</label>
           <input
             id="user"
             name="user"

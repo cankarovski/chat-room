@@ -1,16 +1,42 @@
-/* .Chat {
+.Chat {
+  margin: 10px 0;
   display: flex;
-  flex-direction: column;
-  width: 70%;
-  height: 90%;
-  background-color: whitesmoke;
-} */
-
-.Chat-text {
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  height: 90%;
+  height: 10%;
 }
 
-.Chat-input {
+.Chat form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+  height: 100%;
+}
+
+.Chat input {
+  background-color: inherit;
+  color: white;
+  border: none;
+  border-bottom: 2px solid whitesmoke;
+  height: 80%;
+  width: 80%;
+  outline: none;
+}
+
+.Chat button {
+  height: 80%;
+  width: 80px;
+  background-color: inherit;
+  color: white;
+  border: 2px solid darksalmon;
+  border-radius: 20px;
+  outline: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
+}
+.Chat button:hover {
+  background-color: darksalmon;
 }

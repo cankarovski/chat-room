@@ -1,0 +1,37 @@
+.ChatRoom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  background: rgb(40, 40, 40);
+  width: 70%;
+}
+
+.ChatRoom-messages {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  flex-grow: 1;
+}
+.ChatRoom-messages-list {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+::-webkit-scrollbar {
+  width: 8px; /* width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: inherit; /* color of the tracking area */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(100, 100, 100); /* color of the scroll thumb */
+  border-radius: 4px; /* roundness of the scroll thumb */
+  /* border: 3px solid orange; */ /* creates padding around scroll thumb */
+}
