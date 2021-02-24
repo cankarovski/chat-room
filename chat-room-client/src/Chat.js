@@ -5,15 +5,24 @@ export default class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [],
-      text: "",
+      message: "",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange() {}
-  handleSubmit() {}
+  handleChange(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value,
+    });
+  }
+  handleSubmit(evt) {
+    evt.preventDefault();
+    this.props.onSend(this.state.message);
+    this.setState({
+      message: "",
+    });
+  }
   render() {
     return (
       <div className="Chat">
@@ -24,7 +33,7 @@ export default class Chat extends Component {
             <input
               id="message"
               name="message"
-              value="message"
+              value={this.state.message}
               onChange={this.handleChange}
             ></input>
             <button>Send</button>
