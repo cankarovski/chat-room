@@ -29,6 +29,7 @@ export default class Chat extends Component {
         <form onSubmit={this.handleSubmit}>
           <label htmlFor="message"></label>
           <input
+            autoComplete="off"
             id="message"
             name="message"
             value={this.state.message}
