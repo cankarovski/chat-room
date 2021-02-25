@@ -27,6 +27,7 @@ export default class CreateUser extends Component {
         <form onSubmit={this.handleSubmit}>
           <label htmlFor="user">Create User_</label>
           <input
+            autoComplete="off"
             id="user"
             name="user"
             value={this.state.user}

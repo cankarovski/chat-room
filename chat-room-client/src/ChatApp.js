@@ -4,6 +4,7 @@ import ChatRoom from "./ChatRoom";
 import RoomContainer from "./RoomContainer";
 import CreateUser from "./CreateUser";
 import { io } from "socket.io-client";
+import { Beforeunload } from "react-beforeunload";
 
 export default class ChatApp extends Component {
   constructor(props) {
@@ -11,16 +12,20 @@ export default class ChatApp extends Component {
 
     this.state = {
       socket: null,
-      username: "John",
+      username: null,
       loaded: false,
+      activeRoom: "main",
     };
 
     this.createUser = this.createUser.bind(this);
+    this.joinRoom = this.joinRoom.bind(this);
+    this.cleanUp = this.cleanUp.bind(this);
   }
 
   async componentDidMount() {
     console.log("connecting ...");
-    let socket = await io("http://localhost:3000/");
+    let socket;
+    socket = await io();
     this.setState((prevState) => ({
       ...prevState,
       socket: socket,
@@ -29,9 +34,16 @@ export default class ChatApp extends Component {
     console.log("connected");
   }
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
+    this.cleanUp();
+  }
+
+  async cleanUp() {
     console.log("closing socket ...");
     let socket = this.state.socket;
+
+    await this.leaveChat();
+
     socket.close();
     this.setState((prevState) => ({
       ...prevState,
@@ -48,6 +60,28 @@ export default class ChatApp extends Component {
     }));
   }
 
+  joinRoom(room) {
+    if (this.state.username !== null) {
+      this.state.socket.emit("join", {
+        username: this.state.username,
+        room: room,
+      });
+    }
+
+    /* this.state.socket.on("disconnect", () => {
+      this.setState({
+        loaded: false,
+      });
+    }); */
+  }
+
+  leaveChat() {
+    this.state.socket.emit("leave", {
+      username: this.state.username,
+      room: this.state.activeRoom,
+    });
+  }
+
   render() {
     let chats = (
       <ChatRoom
@@ -55,6 +89,7 @@ export default class ChatApp extends Component {
         socket={this.state.socket}
         roomName="main"
         userName={this.state.username}
+        onMount={this.joinRoom}
       />
     );
     return (
@@ -63,9 +98,17 @@ export default class ChatApp extends Component {
           <h1 className="ChatApp-heading">CHAT-ROOM</h1>
         </div>
 
-        {/* <RoomContainer></RoomContainer> */}
-        {!this.state.loaded && <CreateUser onCreate={this.createUser} />}
-        {this.state.loaded && chats}
+        {this.state.loaded ? (
+          <ChatRoom
+            className="ChatApp-room"
+            socket={this.state.socket}
+            roomName="main"
+            userName={this.state.username}
+            onMount={this.joinRoom}
+          />
+        ) : (
+          <CreateUser onCreate={this.createUser} />
+        )}
       </div>
     );
   }

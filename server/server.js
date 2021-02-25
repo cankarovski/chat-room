@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const http = require("http");
 const path = require("path");
 const socket = require("socket.io");
 
@@ -11,8 +12,10 @@ app.get("/ping", function (req, res) {
   return res.send("pong");
 });
 
-app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
+app.get("/*", function (req, res) {
+  res.sendFile(path.join("../chat-room-client/", "build", "index.html"), {
+    root: __dirname,
+  });
 });
 
 const port = process.env.PORT || 8080;
@@ -21,23 +24,45 @@ const server = app.listen(port, () => {
 });
 const io = socket(server);
 
-/* io.on("connection", (socket) => {
-  const id = socket.handshake.query.id;
-  socket.join("main");
-  console.log("connected, id:", socket.handshake.query);
+let users = new Array();
 
-  socket.on("main", (arg) => {
-    console.log(arg);
-    socket.broadcast.emit("main", arg);
+findUser = (username) => {
+  return users.find((u) => {
+    return u.username === username;
   });
-}); */
+};
+
+findId = (id) => {
+  return users.find((u) => {
+    return u.id === id;
+  });
+};
+
+deleteUser = (id) => {
+  let newUsers = users.filter((u) => {
+    return u.id !== id;
+  });
+  users = newUsers;
+};
 
 io.on("connection", function (socket) {
   console.log(`socket ${socket.id} connected!`);
 
   socket.on("join", function (data) {
+    let user = findId(socket.id);
+    if (user) {
+      /* console.log(`User ${data.username} already in chat room`) */
+      user.socket = socket;
+    } else {
+      users.push({
+        id: socket.id,
+        username: data.username,
+        socket: socket,
+      });
+    }
+
     /* console.log(socket); */
-    console.log(`socket ${data.username} joined room ${data.room}`);
+    console.log(`User ${data.username} joined room ${data.room}`);
     socket.join(data.room);
 
     socket.to(data.room).emit("message", {
@@ -51,6 +76,32 @@ io.on("connection", function (socket) {
     console.log(socket.rooms);
     console.log(data);
     socket.to(data.room).emit("message", { ...data });
+    console.log(users);
+  });
+
+  socket.on("leave", function (data) {
+    socket.to(data.room).emit("message", {
+      room: data.room,
+      username: "Notification",
+      message: `User ${data.username} left room ${data.room}`,
+    });
+  });
+
+  socket.on("disconnecting", () => {
+    let user = findId(socket.id);
+
+    if (user) {
+      socket.rooms.forEach((room) => {
+        data = {
+          room: room,
+          username: "Notification",
+          message: `User ${user.username} left room ${room}`,
+        };
+        io.to(room).emit("message", data);
+      });
+    }
+
+    deleteUser(socket.id);
   });
 
   socket.on("disconnect", () => {

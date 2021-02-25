@@ -20,6 +20,7 @@ export default class ChatRoom extends Component {
   componentDidMount() {
     this.socket = this.props.socket;
 
+    this.props.onMount(this.props.roomName);
     this.initRoom();
   }
 
@@ -28,17 +29,11 @@ export default class ChatRoom extends Component {
   }
 
   async initRoom() {
-    /* this.socket.nickname = "john"; */
-    await this.socket.emit("join", {
-      username: this.props.userName,
-      room: this.props.roomName,
-    });
-
     await this.socket.on("message", (data) => {
       if (data.room === this.props.roomName) {
         console.log(data);
         this.setState((prevState) => ({
-          messages: [...prevState.messages, data],
+          messages: [...prevState.messages, { ...data, self: false }],
         }));
       }
     });
@@ -54,7 +49,7 @@ export default class ChatRoom extends Component {
     };
 
     this.setState((prevState) => ({
-      messages: [...prevState.messages, data],
+      messages: [...prevState.messages, { ...data, self: true }],
     }));
 
     this.socket.emit("message", data);
@@ -66,7 +61,7 @@ export default class ChatRoom extends Component {
 
   render() {
     let messages = this.state.messages.map((m, index) => {
-      if (m.username === this.props.userName) {
+      if (m.self) {
         return (
           <Message
             key={index}
