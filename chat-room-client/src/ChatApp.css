@@ -16,10 +16,27 @@
 }
 
 .ChatApp-heading {
+  font-weight: 100;
   align-self: flex-start;
   text-align: center;
   font-size: 2rem;
   width: 100%;
+}
+
+.ChatApp-heading span {
+  font-weight: 700;
+}
+
+.ChatApp-roomList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  /* text-align: center; */
+}
+.ChatApp-roomList li {
+  margin: 0.5rem;
+  font-size: 1.4rem;
+  cursor: pointer;
 }
 
 /* .ChatApp-room {

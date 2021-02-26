@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./ChatRoom.css";
 import Chat from "./Chat";
 import Message from "./Message";
-import { io } from "socket.io-client";
 
 export default class ChatRoom extends Component {
   constructor(props) {
@@ -18,6 +17,7 @@ export default class ChatRoom extends Component {
     let socket;
   }
   componentDidMount() {
+    console.log("componend did mount! Room:", this.props.roomName);
     this.socket = this.props.socket;
 
     this.props.onMount(this.props.roomName);
@@ -25,6 +25,7 @@ export default class ChatRoom extends Component {
   }
 
   componentDidUpdate() {
+    console.log("componend did update! Room:", this.props.roomName);
     this.scrollToBottom();
   }
 
@@ -92,6 +93,7 @@ export default class ChatRoom extends Component {
     });
     return (
       <div className="ChatRoom">
+        {/* {this.props.active && } */}
         <h3 className="ChatRoom-title">
           {this.props.roomName}: {this.props.userName}
         </h3>

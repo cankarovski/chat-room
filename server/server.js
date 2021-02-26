@@ -45,6 +45,13 @@ deleteUser = (id) => {
   users = newUsers;
 };
 
+/* addMessageToHistory = (id) => {
+  let user = findId(socket.id);
+    if (user) {
+      user.history
+    }
+} */
+
 io.on("connection", function (socket) {
   console.log(`socket ${socket.id} connected!`);
 
@@ -52,12 +59,22 @@ io.on("connection", function (socket) {
     let user = findId(socket.id);
     if (user) {
       /* console.log(`User ${data.username} already in chat room`) */
-      user.socket = socket;
+
+      if (!user.rooms.includes(data.room)) {
+        user.rooms = socket.rooms;
+        user.history.push({ room: data.room, messages: [] });
+      }
     } else {
       users.push({
         id: socket.id,
         username: data.username,
-        socket: socket,
+        rooms: socket.rooms,
+        history: [
+          {
+            room: data.room,
+            messages: [],
+          },
+        ],
       });
     }
 
@@ -76,7 +93,6 @@ io.on("connection", function (socket) {
     console.log(socket.rooms);
     console.log(data);
     socket.to(data.room).emit("message", { ...data });
-    console.log(users);
   });
 
   socket.on("leave", function (data) {
