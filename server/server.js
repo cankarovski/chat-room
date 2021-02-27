@@ -59,11 +59,10 @@ io.on("connection", function (socket) {
     let user = findId(socket.id);
     if (user) {
       /* console.log(`User ${data.username} already in chat room`) */
-
-      if (!user.rooms.includes(data.room)) {
+      /* if (!user.rooms.includes(data.room)) {
         user.rooms = socket.rooms;
         user.history.push({ room: data.room, messages: [] });
-      }
+      } */
     } else {
       users.push({
         id: socket.id,
@@ -92,6 +91,7 @@ io.on("connection", function (socket) {
   socket.on("message", function (data) {
     console.log(socket.rooms);
     console.log(data);
+    // send message to all users in room except the sender
     socket.to(data.room).emit("message", { ...data });
   });
 
