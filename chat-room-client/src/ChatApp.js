@@ -136,27 +136,28 @@ export default class ChatApp extends Component {
 
     return (
       <div className="ChatApp">
-        <div className="ChatApp-sidebar">
-          <h1 className="ChatApp-heading">
-            CHAT<span>ROOM</span>_
-          </h1>
-          <ul className="ChatApp-roomList">
-            {this.state.rooms.map((r) => {
-              return (
-                <li
-                  key={uuidv4()}
-                  onClick={this.toggleRoom}
-                  className={`ChatApp-roomList-${r.active}`}
-                >
-                  {r.name}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-
         {this.state.loaded ? (
-          activeRoom
+          <div className="ChatApp-container">
+            <div className="ChatApp-sidebar">
+              <h1 className="ChatApp-heading">
+                CHAT<span>ROOM</span>_
+              </h1>
+              <ul className="ChatApp-roomList">
+                {this.state.rooms.map((r) => {
+                  return (
+                    <li
+                      key={uuidv4()}
+                      onClick={this.toggleRoom}
+                      className={`ChatApp-roomList-${r.active}`}
+                    >
+                      {r.name}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            {activeRoom}
+          </div>
         ) : (
           <CreateUser onCreate={this.createUser} />
         )}
