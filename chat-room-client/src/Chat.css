@@ -21,8 +21,9 @@
   border: none;
   border-bottom: 2px solid whitesmoke;
   height: 80%;
-  width: 80%;
+  width: 70%;
   outline: none;
+  margin: 0 0.5rem;
 }
 
 .Chat button {

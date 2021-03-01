@@ -25,7 +25,9 @@ export default class CreateUser extends Component {
     return (
       <div className="CreateUser">
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="user">Create User_</label>
+          <label htmlFor="user">
+            CREATE<span>USER</span>_
+          </label>
           <input
             autoComplete="off"
             id="user"
