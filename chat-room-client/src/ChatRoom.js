@@ -94,9 +94,7 @@ export default class ChatRoom extends Component {
     return (
       <div className="ChatRoom">
         {/* {this.props.active && } */}
-        <h3 className="ChatRoom-title">
-          {this.props.roomName}: {this.props.userName}
-        </h3>
+        <h3 className="ChatRoom-title">{this.props.userName}</h3>
         <div className="ChatRoom-messages">
           <div className="ChatRoom-messages-list">
             {messages}

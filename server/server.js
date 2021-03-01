@@ -69,6 +69,7 @@ io.on("connection", function (socket) {
   socket.on("message", function (data) {
     console.log(socket.rooms);
     console.log(data);
+    // send message to all users in room except the sender
     socket.to(data.room).emit("message", { ...data });
   });
 

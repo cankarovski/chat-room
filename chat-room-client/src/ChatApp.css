@@ -1,5 +1,4 @@
 .ChatApp {
-  display: flex;
   /*   flex-direction: row;
   flex-wrap: wrap; */
   background-color: rgb(80, 80, 80);
@@ -7,10 +6,16 @@
   height: 80%;
 }
 
+.ChatApp-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
 .ChatApp-sidebar {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   /* justify-content: center; */
   width: 30%;
 }
@@ -34,9 +39,18 @@
   /* text-align: center; */
 }
 .ChatApp-roomList li {
-  margin: 0.5rem;
-  font-size: 1.4rem;
+  padding: 0.8rem;
+  font-size: 1.7rem;
   cursor: pointer;
+}
+
+.ChatApp-roomList-true {
+  background-color: darksalmon;
+  color: black;
+}
+.ChatApp-roomList-false {
+  background-color: inherit;
+  color: inherit;
 }
 
 /* .ChatApp-room {

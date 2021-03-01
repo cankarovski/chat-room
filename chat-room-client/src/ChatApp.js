@@ -81,7 +81,8 @@ export default class ChatApp extends Component {
   leaveChat() {
     this.state.socket.emit("leave", {
       username: this.state.username,
-      room: this.state.activeRoom,
+      room: this.state
+        .activeRoom /* fix this, there is no activeRoom in state */,
     });
   }
 
@@ -98,35 +99,64 @@ export default class ChatApp extends Component {
   }
 
   render() {
-    let activeRoom = this.state.rooms.find((r) => {
+    let activeRoomName = this.state.rooms.find((r) => {
       return r.active === true;
     });
+
+    /* let room = (
+      <ChatRoom
+        className="ChatApp-room"
+        socket={this.state.socket}
+        roomName={activeRoomName.name}
+        userName={this.state.username}
+        onMount={this.joinRoom}
+      />
+    ); */
+
+    let rooms = this.state.rooms.map((r) => {
+      return (
+        <ChatRoom
+          key={uuidv4()}
+          className="ChatApp-room"
+          socket={this.state.socket}
+          roomName={r.name}
+          userName={this.state.username}
+          onMount={this.joinRoom}
+        />
+      );
+    });
+
+    console.log(rooms);
+
+    let activeRoom = rooms.find((r) => {
+      return r.props.roomName === activeRoomName.name;
+    });
     console.log(activeRoom);
+
     return (
       <div className="ChatApp">
-        <div className="ChatApp-sidebar">
-          <h1 className="ChatApp-heading">
-            CHAT<span>ROOM</span>_
-          </h1>
-          <ul className="ChatApp-roomList">
-            {this.state.rooms.map((r) => {
-              return (
-                <li key={uuidv4()} onClick={this.toggleRoom}>
-                  {r.name}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-
         {this.state.loaded ? (
-          <ChatRoom
-            className="ChatApp-room"
-            socket={this.state.socket}
-            roomName={activeRoom.name}
-            userName={this.state.username}
-            onMount={this.joinRoom}
-          />
+          <div className="ChatApp-container">
+            <div className="ChatApp-sidebar">
+              <h1 className="ChatApp-heading">
+                CHAT<span>ROOM</span>_
+              </h1>
+              <ul className="ChatApp-roomList">
+                {this.state.rooms.map((r) => {
+                  return (
+                    <li
+                      key={uuidv4()}
+                      onClick={this.toggleRoom}
+                      className={`ChatApp-roomList-${r.active}`}
+                    >
+                      {r.name}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            {activeRoom}
+          </div>
         ) : (
           <CreateUser onCreate={this.createUser} />
         )}
