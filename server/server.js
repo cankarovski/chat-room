@@ -8,10 +8,6 @@ const app = express();
 
 app.use(express.static(path.join("../chat-room-client/", "build")));
 
-app.get("/ping", function (req, res) {
-  return res.send("pong");
-});
-
 app.get("/*", function (req, res) {
   res.sendFile(path.join("../chat-room-client/", "build", "index.html"), {
     root: __dirname,
@@ -45,40 +41,21 @@ deleteUser = (id) => {
   users = newUsers;
 };
 
-/* addMessageToHistory = (id) => {
-  let user = findId(socket.id);
-    if (user) {
-      user.history
-    }
-} */
-
 io.on("connection", function (socket) {
   console.log(`socket ${socket.id} connected!`);
 
   socket.on("join", function (data) {
     let user = findId(socket.id);
     if (user) {
-      /* console.log(`User ${data.username} already in chat room`) */
-
-      if (!user.rooms.includes(data.room)) {
-        user.rooms = socket.rooms;
-        user.history.push({ room: data.room, messages: [] });
-      }
+      user.rooms = socket.rooms;
     } else {
       users.push({
         id: socket.id,
         username: data.username,
         rooms: socket.rooms,
-        history: [
-          {
-            room: data.room,
-            messages: [],
-          },
-        ],
       });
     }
 
-    /* console.log(socket); */
     console.log(`User ${data.username} joined room ${data.room}`);
     socket.join(data.room);
 

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./ChatApp.css";
 import ChatRoom from "./ChatRoom";
-import RoomContainer from "./RoomContainer";
 import CreateUser from "./CreateUser";
 import { io } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";

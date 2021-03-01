@@ -21,10 +21,28 @@
   margin: 1rem;
   display: block;
 }
+
 .CreateUser input {
-  width: 100%;
+  background-color: inherit;
+  color: white;
+  border: none;
+  border-bottom: 2px solid whitesmoke;
+  height: 80%;
+  width: 80%;
+  outline: none;
 }
 
 .CreateUser button {
-  margin: 1.5rem;
+  height: 80%;
+  background-color: inherit;
+  color: white;
+  border: 2px solid darksalmon;
+  border-radius: 20px;
+  outline: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease;
+}
+.CreateUser button:hover {
+  background-color: darksalmon;
 }
